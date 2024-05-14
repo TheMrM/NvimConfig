@@ -1,69 +1,109 @@
-set nocompatible            " disable compatibility to old-time vi
-set showmatch               " show matching 
-set ignorecase              " case insensitive 
-set mouse=v                 " middle-click paste with 
-set hlsearch                " highlight search 
-set incsearch               " incremental search
-set tabstop=4               " number of columns occupied by a tab 
-set softtabstop=4           " see multiple spaces as tabstops so <BS> does the right thing
-set expandtab               " converts tabs to white space
-set shiftwidth=4            " width for autoindents
-set autoindent              " indent a new line the same amount as the line just typed
-set number                  " add line numbers
-set relativenumber          " set line as 0
-set wildmode=longest,list   " get bash-like tab completions
-filetype plugin indent on   "allow auto-indenting depending on file type
-set mouse=a                 " enable mouse click
-set clipboard=unnamedplus   " using system clipboard
+" Disable compatibility with old-time vi, enabling modern Vim features.
+set nocompatible
+
+" Show matching brackets as you type.
+set showmatch
+
+" Enable case insensitive searching.
+set ignorecase
+
+" Enable mouse support for middle-click pasting.
+set mouse=v
+
+" Highlight search matches across the document.
+set hlsearch
+
+" Show search results incrementally as you type.
+set incsearch
+
+" Set the number of spaces a tab character is considered to occupy.
+set tabstop=4
+
+" Adjusts the amount of space used per tab in the file.
+set softtabstop=4
+
+" Convert tabs into spaces for consistent formatting.
+set expandtab
+
+" Set the width for automatically created indents.
+set shiftwidth=4
+
+" Auto-indent new lines to match the indentation level of the previous line.
+set autoindent
+
+" Display line numbers.
+set number
+
+" Set current line number relative to the cursor line.
+set relativenumber
+
+" Enhance command-line completion to behave more like bash.
+set wildmode=longest,list
+
+" Enable automatic indentation based on file type.
+filetype plugin indent on
+
+" Enable mouse support across all modes.
+set mouse=a
+
+" Use system clipboard for copy/paste operations.
+set clipboard=unnamedplus
+
+" Enable plugins based on file type.
 filetype plugin on
-set ttyfast                 " Speed up scrolling in Vim
-set spell                   " enable spell check (may need to download language package)
-syntax on                   "syntax highlight
-" set noswapfile            " disable creating swap file
-" set backupdir=~/.cache/vim " Directory to store backup files
-" Set spell check language
-set spelllang=en_us,ro      " set spell check language
-" Set spell check highlight to underline
+
+" Increase scrolling speed in Vim.
+set ttyfast
+
+" Enable spell checking, additional language packages may be required.
+set spell
+
+" Enable syntax highlighting.
+syntax on
+
+" Set the spell check language to English and Romanian.
+set spelllang=en_us,ro
+
+" Clear spell check highlighting, setting specific styles.
 highlight clear SpellBad
 highlight clear SpellCap
 highlight clear SpellLocal
 highlight clear SpellRare
 
+" Begin configuration for Vim plugins.
 call plug#begin()
 
-" Plugin Section
-Plug 'github/copilot.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'dense-analysis/ale'
-Plug 'dracula/vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'tpope/vim-dispatch' 
-Plug 'preservim/nerdcommenter'
-Plug 'mhinz/vim-startify'
-Plug 'vim-airline/vim-airline'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'octol/vim-cpp-enhanced-highlight'
+" Plugin configurations.
+Plug 'github/copilot.vim'             " GitHub's AI pair programmer.
+Plug 'scrooloose/nerdtree'            " File system explorer.
+Plug 'dense-analysis/ale'             " Asynchronous linting/engine.
+Plug 'dracula/vim'                    " Dracula theme.
+Plug 'ryanoasis/vim-devicons'         " Adds file type icons to Vim plugins.
+Plug 'SirVer/ultisnips'               " Snippet manager.
+Plug 'honza/vim-snippets'             " Snippet library.
+Plug 'tpope/vim-dispatch'             " Asynchronous build and test dispatcher.
+Plug 'preservim/nerdcommenter'        " Enhanced comment functionality.
+Plug 'mhinz/vim-startify'             " Start screen for Vim.
+Plug 'vim-airline/vim-airline'        " Status/tabline.
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " Intellisense engine for Vim.
+Plug 'octol/vim-cpp-enhanced-highlight' " Enhanced C++ syntax highlighting.
 
+" End plugin configuration.
 call plug#end()
 
-" Commands
-
+" Custom command definitions for building C and C++ projects.
 command! BuildC !gcc % -o %< && ./%<
 command! BuildCpp !g++ % -o %< && ./%<
 
-" Navigate windows with arrow keys
+" Navigation mappings for moving between Vim windows using arrow keys.
 nnoremap <silent> <Up> <C-w>k
 nnoremap <silent> <Down> <C-w>j
 nnoremap <silent> <Left> <C-w>h
 nnoremap <silent> <Right> <C-w>l
 
-" Use <Tab> and <S-Tab> to navigate through popup menu
+" Configuration for navigating popup menus.
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Use <Enter> to select the completion item
+" Map <Enter> to select the current completion item, or insert a newline if no completion menu is visible.
 inoremap <expr> <CR>    pumvisible() ? coc#_select_confirm() : "\<CR>"
-
-
