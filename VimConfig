@@ -1,137 +1,136 @@
-" Automatically open files in horizontal split if multiple files are opened                                                                
-if argc() > 1                                                                                                                              
-  for i in range(1, argc() - 1)                                                                                                            
-    execute 'split ' . argv()[i]                                                                                                           
-  endfor                                                                                                                                   
-  edit argv()[-1]                                                                                                                          
-endif                                                                                                                                      
-                                                                                                                                           
-" Disable compatibility with old-time vi, enabling modern Vim features.                                                                    
-set nocompatible                                                                                                                           
-                                                                                                                                           
-" Show matching brackets as you type.                                                                                                      
-set showmatch                                                                                                                              
-                                                                                                                                           
-" Enable case insensitive searching.                                                                                                       
-set ignorecase                                                                                                                             
-                                                                                                                                           
-" Enable mouse support for middle-click pasting.                                                                                           
-set mouse=v                                                                                                                                
-                                                                                                                                           
-" Highlight search matches across the document.                                                                                            
-set hlsearch                                                                                                                               
-                                                                                                                                           
-" Show search results incrementally as you type.                                                                                           
-set incsearch                                                                                                                              
-                                                                                                                                           
-" Set the number of spaces a tab character is considered to occupy.                                                                        
-set tabstop=4                                                                                                                              
-                                                                                                                                           
-" Adjusts the amount of space used per tab in the file.                                                                                    
-set softtabstop=4                                                                                                                          
-                                                                                                                                           
-" Convert tabs into spaces for consistent formatting.                                                                                      
-set expandtab                                                                                                                              
-                                                                                                                                           
-" Set the width for automatically created indents.                                                                                         
-set shiftwidth=4                                                                                                                           
+" ==================== General Settings ====================
 
-" Auto-indent new lines to match the indentation level of the previous line.
+" Automatically open files in horizontal split if multiple files are opened
+if argc() > 1
+  for i in range(1, argc() - 1)
+    execute 'split ' . argv()[i]
+  endfor
+  edit argv()[-1]
+endif
+
+set nocompatible          " Modern Vim features
+set showmatch             " Show matching brackets
+set ignorecase            " Case-insensitive search
+set mouse=a               " Enable mouse in all modes
+set hlsearch              " Highlight search results
+set incsearch             " Incremental search
+set tabstop=4             " Tab = 4 spaces
+set softtabstop=4
+set expandtab             " Convert tabs to spaces
+set shiftwidth=4          " Indentation width
 set autoindent
+set number                " Show line numbers
+set relativenumber        " Relative numbers
+set wildmode=longest,list " Better command line completion
+set ttyfast               " Faster scrolling
+set clipboard=unnamedplus " Use system clipboard
+set spell                 " Enable spellcheck
+set spelllang=en_us,ro   " Spellcheck languages
+set nobackup              " Disable backups
+set nowritebackup
+set cmdheight=2          " More command line space
+set updatetime=300       " Faster completion
+set shortmess+=c
+set signcolumn=yes
+set backspace=indent,eol,start
 
-" Display line numbers.
-set number
-
-" Set current line number relative to the cursor line.
-set relativenumber
-
-" Enhance command-line completion to behave more like bash.
-set wildmode=longest,list
-
-" Enable automatic indentation based on file type.
 filetype plugin indent on
-
-" Enable mouse support across all modes.
-set mouse=a
-
-" Use system clipboard for copy/paste operations.
-set clipboard=unnamedplus
-
-" Enable plugins based on file type.
-filetype plugin on
-
-" Increase scrolling speed in Vim.
-set ttyfast
-
-" Enable spell checking, additional language packages may be required.
-set spell
-
-" Enable syntax highlighting.
 syntax on
 
-" Set the spell check language to English and Romanian.
-set spelllang=en_us,ro
-
-" Clear spell check highlighting, setting specific styles.
 highlight clear SpellBad
 highlight clear SpellCap
 highlight clear SpellLocal
 highlight clear SpellRare
 
-" Begin configuration for Vim plugins.
+" ==================== Plugins ====================
+
 call plug#begin()
 
-" Plugin configurations.
-Plug 'github/copilot.vim'             " GitHub's AI pair programmer.
-Plug 'scrooloose/nerdtree'            " File system explorer.
-Plug 'dense-analysis/ale'             " Asynchronous linting/engine.
-"Plug 'dracula/vim'                    " Dracula theme.
-Plug 'morhetz/gruvbox'                " Gruvbox theme.
-Plug 'ryanoasis/vim-devicons'         " Adds file type icons to Vim plugins.
-Plug 'SirVer/ultisnips'               " Snippet manager.
-Plug 'honza/vim-snippets'             " Snippet library.
-Plug 'tpope/vim-dispatch'             " Asynchronous build and test dispatcher.
-Plug 'preservim/nerdcommenter'        " Enhanced comment functionality.
-Plug 'mhinz/vim-startify'             " Start screen for Vim.
-Plug 'vim-airline/vim-airline'        " Status/tabline.
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " Treesitter syntax highlighting.
-Plug 'neoclide/coc.nvim', {'branch': 'release'} " Intellisense engine for Vim.
-Plug 'octol/vim-cpp-enhanced-highlight' " Enhanced C++ syntax highlighting.
-Plug 'ThePrimeagen/vim-be-good'       " Vim learning game.
+" Themes
+Plug 'morhetz/gruvbox'
+"Plug 'dracula/vim'
 
-" End plugin configuration.
+" Essentials
+Plug 'scrooloose/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'dense-analysis/ale'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'preservim/nerdcommenter'
+Plug 'mhinz/vim-startify'
+Plug 'vim-airline/vim-airline'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-dispatch'
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" Advanced
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'ThePrimeagen/vim-be-good'
+Plug 'github/copilot.vim'
+
 call plug#end()
 
-" Navigation mappings for moving between Vim windows using arrow keys.
-nnoremap <silent> <Up> <C-w>k
-nnoremap <silent> <Down> <C-w>j
-nnoremap <silent> <Left> <C-w>h
-nnoremap <silent> <Right> <C-w>l
+" ==================== Plugin Config ====================
 
-" Configuration for navigating popup menus.
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+colorscheme lunaperche
 
-" Map <Enter> to select the current completion item, or insert a newline if no completion menu is visible.
-inoremap <expr> <CR>    pumvisible() ? coc#_select_confirm() : "\<CR>"
-
-" Use <Tab> to navigate completion menu, insert a Tab if no completion is visible
-inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<C-r>=coc#refresh()<CR>"
-inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<Tab>"
-
-" Press <Enter> to confirm completion or insert a new line if no completion is visible
-inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<CR>"
-
-
-
-" Activate color scheme
-colorscheme lunaperche 
-
-" Some NERDTree settings
+" NERDTree
 let g:webdevicons_enable_nerdtree = 1
 let g:webdevicons_enable = 1
 let g:NERDTreeGitStatusWithFlags = 1
 let g:NERDTreeDirArrow = 1
 
-" Enable NERDTree on startup
-" autocmd VimEnter * NERDTree | wincmd p 
+" CoC
+let g:coc_global_extensions = [
+  \ 'coc-tsserver',
+  \ 'coc-json',
+  \ 'coc-prettier',
+  \ 'coc-eslint',
+  \ 'coc-snippets'
+  \ ]
+
+" AutoPairs
+let g:AutoPairsMapSpace = 1
+let g:AutoPairsCenterLine = 1
+let g:AutoPairsMultilineClose = 0
+let g:AutoPairsCompleteOnlyOnSpace = 1
+let g:AutoPairsPreferClose = 0
+let g:AutoPairsShortcutToggle = '<M-p>'
+let g:AutoPairsShortcutFastWrap = '<M-e>'
+let g:AutoPairsShortcutJump = '<M-n>'
+let g:AutoPairs = { '(':')', '[':']', '{':'}', '"':'"', "'":"'", '`':'`' }
+
+" ==================== Key Mappings ====================
+
+" Window navigation
+nnoremap <silent> <Up> <C-w>k
+nnoremap <silent> <Down> <C-w>j
+nnoremap <silent> <Left> <C-w>h
+nnoremap <silent> <Right> <C-w>l
+
+" CoC Navigation
+inoremap <silent><expr> <TAB> pumvisible() ? coc#pum#next(1) : coc#refresh()
+inoremap <silent><expr> <S-TAB> pumvisible() ? coc#pum#prev(1) : "\<Tab>"
+inoremap <silent><expr> <CR> pumvisible() ? coc#pum#confirm() : "\<CR>"
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> K :call CocActionAsync('doHover')<CR>
+
+" AutoPairs space mapping
+function! AddSpaceAfterPair()
+    if has_key(g:AutoPairs, getline('.')[col('.')-2])
+        return "\<Space>\<Space>\<Left>"
+    else
+        return "\<Space>"
+    endif
+endfunction
+inoremap <expr> <Space> AddSpaceAfterPair()
+
